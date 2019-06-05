@@ -18,4 +18,4 @@ A player will be requested to enter their API key from Riot's developer portal (
 Upon executing, the program will compile these stats from Riot's API. The results are tested against a predictive model of pre-determined 
 player profiles and return either "Yes" or "No" based on their fit with my preferred qualifications for a League of Legends player.
 
-New data points are still being updated and parameters are being refined to produce more accurate models still.
+Currently there are only 100 data points that each entry is being tested against. New data points are still being updated and parameters are being refined to produce more accurate models still.
