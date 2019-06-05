@@ -1,8 +1,8 @@
 # League-Player-Screening
 Gathering data and training a predictive model to determine if a given individual would compliment my personal playstyle in League of Legends.
 
-The metrics used were gathered over the latest 15 game that a player has played on:\n
--5v5 Blind Summoner's Rift
+The metrics used were gathered over the latest 15 game that a player has played on:
+-5v5 Blind Summoner's Rift,
 -5v5 Draft Pick Summoner's Rift
 -5v5 Ranked Solo/Duo Summoner's Rift
 -5v5 Flex Ranked Summoner's Rift
