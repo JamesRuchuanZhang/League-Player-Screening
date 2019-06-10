@@ -1,5 +1,9 @@
 from sklearn import tree
-import csv
+from sklearn.svm import SVC
+from sklearn.linear_model import Perceptron
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+import numpy as np
 import requests
 import xlrd
 import xlwt
@@ -121,11 +125,38 @@ def getTrain(sheet):
 
 #Compares the user's statistics against those used to train this predictive model.
 def predict(train, decision, matchStats):
-    clf = tree.DecisionTreeClassifier()
-    clf = clf.fit(train,decision)
-    prediction = clf.predict([matchStats])
-    return prediction
+    clf_tree = tree.DecisionTreeClassifier().fit(train,decision)
+    clf_svm = SVC().fit(train,decision)
+    clf_perceptron = Perceptron().fit(train,decision)
+    clf_KNN = KNeighborsClassifier().fit(train,decision)
 
+    #Testing each of the models with the same data and determining the accuracy of each method
+    predict_tree = clf_tree.predict(train)
+    acc_tree = accuracy_score(decision, predict_tree)
+    
+    predict_svm = clf_svm.predict(train)
+    acc_svm = accuracy_score(decision, predict_svm)
+
+    predict_per = clf_perceptron.predict(train)
+    acc_per = accuracy_score(decision, predict_tree)
+
+    predict_KNN = clf_KNN.predict(train)
+    acc_KNN = accuracy_score(decision, predict_KNN)
+
+    #Adding all of the models' accuracies to a dictionary and pulling the max value
+    accuracy = {'tree': acc_tree, 'svm': acc_svm, 'per':acc_per, 'KNN':acc_KNN}
+    optimal = max(accuracy, key=accuracy.get)
+
+    #prediction is returned based on which model had the highest accuracy score. Add in additional parameters for ties in the future. 
+    if optimal == 'tree':
+            prediction = clf_tree.predict([matchStats])
+    if optimal == 'svm':
+            prediction = clf_svm.predict([matchStats])
+    if optimal == 'per':
+            prediction = clf_per.predict([matchStats])
+    if optimal == 'KNN':
+            prediction = clf_KNN.predict([matchStats])
+    return prediction
     
 def main():
     ign = input("Please enter your ign: ")
@@ -147,8 +178,6 @@ def main():
     print("Your percent games played in top lane: %.2f" % matchStats[3])
     print("Your average CS differential by 10 minutes: %.2f" % matchStats[4])
     print("Verdict, would I play with you?: " + prediction[0])
-
-
 
 if __name__ == "__main__":
     main()
